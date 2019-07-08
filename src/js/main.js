@@ -55,7 +55,7 @@ export default class App {
 			const item = this.items.shift();
 			const card = document.querySelector('.card');
 			card.setAttribute('class', 'card');
-			card.classList.add('card--2');
+			card.classList.add('card--' + Math.floor(Math.random() * 3));
 			card.querySelector('.text').innerHTML = item.text;
 			const icon = fetch(`icons/${item.icon}`).then(response => response.text()).then(html => {
 				card.querySelector('.icon').innerHTML = html;

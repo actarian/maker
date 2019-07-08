@@ -109,7 +109,8 @@ body {
     color: #ffc600; }
     .card .inner .text {
       text-transform: uppercase;
-      font-size: 40px; }
+      font-size: 40px;
+      text-shadow: 0 4px 3px rgba(0, 0, 0, 0.15); }
     .card .inner svg {
       fill: #ffc600;
       width: auto;

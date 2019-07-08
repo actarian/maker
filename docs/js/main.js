@@ -8935,7 +8935,7 @@ function () {
         var item = this.items.shift();
         var card = document.querySelector('.card');
         card.setAttribute('class', 'card');
-        card.classList.add('card--2');
+        card.classList.add('card--' + Math.floor(Math.random() * 3));
         card.querySelector('.text').innerHTML = item.text;
         var icon = fetch("icons/".concat(item.icon)).then(function (response) {
           return response.text();
