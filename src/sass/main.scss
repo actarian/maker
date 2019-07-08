@@ -1,0 +1,92 @@
+html,
+body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: Montserrat;
+
+}
+
+body {
+	background: black;
+	color: white;
+	-webkit-overflow-scrolling: touch;
+}
+
+.page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 40px;
+	min-height: 100vh;
+}
+
+.toolbar {
+	width: 100%
+}
+
+.btn--save {
+	appearance: none;
+	box-shadow: none;
+	background: grey;
+	border: none;
+	border-radius: 3px;
+	font-size: 16px;
+	padding: 7px 15px;
+	line-height: 1;
+}
+
+.info {}
+
+.output {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 960px;
+	height: 540px;
+
+	.inner {
+		display: flex;
+		width: calc(100% - 20px);
+		flex: 0 0 auto;
+		color: #ffc600;
+
+		.text {
+			text-transform: uppercase;
+			font-size: 40px;
+		}
+
+		svg {
+			fill: #ffc600;
+			width: auto;
+			height: 100px;
+		}
+	}
+}
+
+.card--0 {
+
+	.inner {
+		flex-direction: column;
+	}
+
+	.icon {
+		order: 1;
+	}
+
+	.text {
+		order: 2;
+		font-size: 70px;
+	}
+}

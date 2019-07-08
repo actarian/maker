@@ -1,0 +1,24 @@
+﻿{
+	"targets": {
+		"browser": {
+			"compile": [{
+				"input": "src/sass/main.scss",
+				"output": "docs/css/main.css",
+				"minify": true
+			}, {
+				"input": "src/js/main.js",
+				"output": "docs/js/main.js",
+				"minify": true
+			}],
+			"bundle": []
+		}
+	},
+	"options": {
+		"tfs": false,
+		"server": {
+			"express": "./server/server.js",
+			"src": "./docs",
+			"port": 9999
+		}
+	}
+}
