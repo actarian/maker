@@ -24,7 +24,8 @@
 	"dependencies": {
 		"express": "~4.17.1",
 		"body-parser": "~1.19.0",
-		"html2canvas": "~1.0.0-rc.3"
+		"html2canvas": "~1.0.0-rc.3",
+		"connect-livereload": "~0.6.1"
 	},
 	"devDependencies": {
 		"@babel/core": "7.2.2",

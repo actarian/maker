@@ -1,4 +1,5 @@
 /* jshint esversion: 6 */
+const liveReload = require('connect-livereload');
 const bodyParser = require('body-parser');
 const files = require('./files');
 const express = require('express');
@@ -14,6 +15,10 @@ app.use(bodyParser.json({
 }));
 
 app.use(express.static('docs'));
+
+app.use(liveReload({
+	port: 35729
+}));
 
 /*
 app.get('/', (req, res) => {

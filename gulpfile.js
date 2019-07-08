@@ -30,6 +30,7 @@ let configuration = getJson('./gulpfile.config.json');
 
 const compileTask = parallel(compileScss, compileJs, compileTs); // compilePartials, compileSnippets
 const bundleTask = parallel(bundleCss, bundleJs);
+const serveAndWatch = parallel(serveTask, watchTask);
 
 exports.compile = compileTask;
 exports.bundle = bundleTask;
@@ -37,7 +38,7 @@ exports.build = series(compileTask, bundleTask);
 exports.watch = watchTask;
 exports.serve = serveTask;
 exports.start = series(compileTask, bundleTask, watchTask);
-exports.default = series(compileTask, bundleTask, serveTask, watchTask);
+exports.default = series(compileTask, bundleTask, serveAndWatch);
 
 // COMPILERS
 function compileScss(done) {
@@ -366,11 +367,20 @@ function serveTask() {
 		directoryListing: false,
 	}, configuration.options.server || {});
 	if (options.express) {
-		const server = gls.new(options.express); // './server.js'
+		// killall node
+		const server = gls([options.express, 'static', options.port]); // gls.new(options.express); // , undefined, options.port
+		// Note: try wrapping in a function if getting an error like `TypeError: Bad argument at TypeError (native) at ChildProcess.spawn`
+		watch(options.express, (path) => {
+			console.log('changed', path);
+			server.start.bind(server)();
+		});
+		watch('src/**/*').on('change', path => {
+			console.log('changed', path);
+			server.notify.call(server, { path });
+		});
 		return server.start();
 	} else {
-		return src(options.src)
-			.pipe(webserver(options));
+		return src(options.src).pipe(webserver(options));
 	}
 }
 

@@ -7,7 +7,7 @@ body {
   font-family: Montserrat; }
 
 body {
-  background: black;
+  background: #111111;
   color: white;
   -webkit-overflow-scrolling: touch; }
 
@@ -29,20 +29,40 @@ body {
   min-height: 100vh; }
 
 .toolbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%; }
 
-.btn--save {
+.btn--export {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
   -webkit-box-shadow: none;
           box-shadow: none;
-  background: grey;
+  background: white;
   border: none;
   border-radius: 3px;
   font-size: 16px;
   padding: 7px 15px;
-  line-height: 1; }
+  line-height: 1;
+  outline: none !important;
+  cursor: pointer;
+  text-transform: uppercase; }
+
+.info {
+  font-size: 20px;
+  padding: 20px; }
 
 .output {
   display: -webkit-box;
@@ -58,7 +78,9 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 100%; }
+  border: 1px solid #333;
+  width: auto;
+  margin: 0 auto; }
 
 .card {
   display: -webkit-box;
@@ -80,7 +102,7 @@ body {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
     -webkit-box-flex: 0;
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
@@ -102,9 +124,49 @@ body {
 .card--0 .icon {
   -webkit-box-ordinal-group: 2;
       -ms-flex-order: 1;
-          order: 1; }
+          order: 1;
+  margin-bottom: 20px; }
 
 .card--0 .text {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+  font-size: 70px; }
+
+.card--1 .inner {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.card--1 .icon {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+  margin-top: 20px; }
+
+.card--1 .text {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  font-size: 70px; }
+
+.card--2 .inner {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.card--2 .icon {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  margin-right: 20px; }
+
+.card--2 .text {
   -webkit-box-ordinal-group: 3;
       -ms-flex-order: 2;
           order: 2;

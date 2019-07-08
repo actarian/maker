@@ -8,7 +8,7 @@ export default class App {
 
 	init() {
 		const body = document.querySelector('body');
-		const save = document.querySelector('.btn--save');
+		const save = document.querySelector('.btn--export');
 		Promise.all([this.getOutputs(), this.getInputs()]).then(datas => {
 			this.onSave = this.onSave.bind(this);
 			save.addEventListener('click', this.onSave);
@@ -42,19 +42,28 @@ export default class App {
 
 	onSave() {
 		this.items = this.inputs.filter(x => this.outputs.indexOf(x.name) === -1);
+		this.total = this.items.length;
 		this.onNext();
 	}
 
 	onNext() {
+		const info = document.querySelector('.info');
+		const total = this.total;
 		if (this.items.length) {
+			const index = total - this.items.length + 1;
+			info.innerHTML = `exporting ${index} of ${total}`;
 			const item = this.items.shift();
 			const card = document.querySelector('.card');
+			card.setAttribute('class', 'card');
+			card.classList.add('card--2');
 			card.querySelector('.text').innerHTML = item.text;
 			const icon = fetch(`icons/${item.icon}`).then(response => response.text()).then(html => {
 				card.querySelector('.icon').innerHTML = html;
 				const svg = card.querySelector('.icon svg');
 				svg.setAttribute('fill', '#ffc600');
-				svg.setAttribute('viewBox', '0 0 24 24');
+				if (!svg.hasAttribute('viewBox')) {
+					svg.setAttribute('viewBox', '0 0 24 24');
+				}
 				this.toCanvas(card).then(canvas => {
 					// this.download(canvas, item.name);
 					this.saveToDisk(canvas, item.name).then(saved => {
@@ -64,6 +73,10 @@ export default class App {
 					});
 				});
 			});
+		} else if (total === 0) {
+			info.innerHTML = `nothing to export!`;
+		} else {
+			info.innerHTML = `export complete!`;
 		}
 	}
 

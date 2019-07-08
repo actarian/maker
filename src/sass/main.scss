@@ -9,7 +9,7 @@ body {
 }
 
 body {
-	background: black;
+	background: #111111;
 	color: white;
 	-webkit-overflow-scrolling: touch;
 }
@@ -24,28 +24,40 @@ body {
 }
 
 .toolbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	width: 100%
 }
 
-.btn--save {
+.btn--export {
 	appearance: none;
 	box-shadow: none;
-	background: grey;
+	background: white;
 	border: none;
 	border-radius: 3px;
 	font-size: 16px;
 	padding: 7px 15px;
 	line-height: 1;
+	outline: none !important;
+	cursor: pointer;
+	text-transform: uppercase;
 }
 
-.info {}
+.info {
+	font-size: 20px;
+	padding: 20px;
+}
 
 .output {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
+	border: 1px solid #333;
+	width: auto;
+	margin: 0 auto;
 }
 
 .card {
@@ -58,7 +70,7 @@ body {
 
 	.inner {
 		display: flex;
-		width: calc(100% - 20px);
+		width: calc(100% - 40px);
 		flex: 0 0 auto;
 		color: #ffc600;
 
@@ -83,6 +95,42 @@ body {
 
 	.icon {
 		order: 1;
+		margin-bottom: 20px;
+	}
+
+	.text {
+		order: 2;
+		font-size: 70px;
+	}
+}
+
+.card--1 {
+
+	.inner {
+		flex-direction: column;
+	}
+
+	.icon {
+		order: 2;
+		margin-top: 20px;
+	}
+
+	.text {
+		order: 1;
+		font-size: 70px;
+	}
+}
+
+.card--2 {
+
+	.inner {
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.icon {
+		order: 1;
+		margin-right: 20px;
 	}
 
 	.text {

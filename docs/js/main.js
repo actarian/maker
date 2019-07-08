@@ -8866,7 +8866,7 @@ function () {
       var _this = this;
 
       var body = document.querySelector('body');
-      var save = document.querySelector('.btn--save');
+      var save = document.querySelector('.btn--export');
       Promise.all([this.getOutputs(), this.getInputs()]).then(function (datas) {
         _this.onSave = _this.onSave.bind(_this);
         save.addEventListener('click', _this.onSave);
@@ -8918,6 +8918,7 @@ function () {
       this.items = this.inputs.filter(function (x) {
         return _this4.outputs.indexOf(x.name) === -1;
       });
+      this.total = this.items.length;
       this.onNext();
     }
   }, {
@@ -8925,9 +8926,16 @@ function () {
     value: function onNext() {
       var _this5 = this;
 
+      var info = document.querySelector('.info');
+      var total = this.total;
+
       if (this.items.length) {
+        var index = total - this.items.length + 1;
+        info.innerHTML = "exporting ".concat(index, " of ").concat(total);
         var item = this.items.shift();
         var card = document.querySelector('.card');
+        card.setAttribute('class', 'card');
+        card.classList.add('card--2');
         card.querySelector('.text').innerHTML = item.text;
         var icon = fetch("icons/".concat(item.icon)).then(function (response) {
           return response.text();
@@ -8935,7 +8943,10 @@ function () {
           card.querySelector('.icon').innerHTML = html;
           var svg = card.querySelector('.icon svg');
           svg.setAttribute('fill', '#ffc600');
-          svg.setAttribute('viewBox', '0 0 24 24');
+
+          if (!svg.hasAttribute('viewBox')) {
+            svg.setAttribute('viewBox', '0 0 24 24');
+          }
 
           _this5.toCanvas(card).then(function (canvas) {
             // this.download(canvas, item.name);
@@ -8946,6 +8957,10 @@ function () {
             });
           });
         });
+      } else if (total === 0) {
+        info.innerHTML = "nothing to export!";
+      } else {
+        info.innerHTML = "export complete!";
       }
     }
   }, {

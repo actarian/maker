@@ -1,22 +1,9 @@
 # maker
 
-A simple compiler & bundler with building targets, and serve option with livereload.  
-
-> [demo](https://actarian.github.io/maker/)
-
 ## Requirements
 
 #### [NodeJs](https://nodejs.org/it/)
 * `node.js -v`  
-
-#### [Npm](https://www.npmjs.com/)
-* `npm -v`
-
-Upgrading Npm on mac
-* `npm install npm@latest -g`
-
-Upgrading Npm on windows
-* [npm-windows-upgrade](https://www.npmjs.com/package/npm-windows-upgrade) 
 
 ___
 
@@ -83,3 +70,9 @@ ___
         ├── livereload: true
         └── directoryListing: false
 ```
+
+Upgrading Npm on mac
+* `npm install npm@latest -g`
+
+Upgrading Npm on windows
+* [npm-windows-upgrade](https://www.npmjs.com/package/npm-windows-upgrade) 
