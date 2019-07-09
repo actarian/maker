@@ -41,25 +41,58 @@ export default class App {
 	}
 
 	onSave() {
+		this.i = this.outputs.length;
 		this.items = this.inputs.filter(x => this.outputs.indexOf(x.name) === -1);
 		this.total = this.items.length;
 		this.onNext();
 	}
 
 	onNext() {
+		const styles = 3;
 		const info = document.querySelector('.info');
 		const total = this.total;
 		if (this.items.length) {
+			const i = this.i++;
 			const index = total - this.items.length + 1;
+			const style = (i + index) % styles;
 			info.innerHTML = `exporting ${index} of ${total}`;
 			const item = this.items.shift();
 			const card = document.querySelector('.card');
 			card.setAttribute('class', 'card');
-			card.classList.add('card--' + Math.floor(Math.random() * 3));
-			card.querySelector('.text').innerHTML = item.text;
-			const icon = fetch(`icons/${item.icon}`).then(response => response.text()).then(html => {
-				card.querySelector('.icon').innerHTML = html;
-				const svg = card.querySelector('.icon svg');
+			card.classList.add('card--' + style);
+			const textClasses = ['text-lg', 'text-md', 'text-sm'];
+			const textIndex = Math.min(textClasses.length - 1, Math.floor(item.text.length / 80));
+			const text = card.querySelector('.text');
+			text.innerHTML = item.text.trim();
+			text.setAttribute('class', `text ${textClasses[textIndex]}`);
+			Promise.all(item.icons.map(x => {
+				return fetch(`icons/${x}`).then(response => response.text()).then(icon => {
+					const template = document.createElement('template');
+					template.innerHTML = icon.trim();
+					const svg = template.content.firstChild;
+					svg.setAttribute('fill', '#ffc600');
+					if (!svg.hasAttribute('viewBox')) {
+						svg.setAttribute('viewBox', '0 0 24 24');
+					}
+					return svg;
+				});
+			})).then(icons => {
+				const parent = card.querySelector('.icons');
+				parent.innerHTML = '';
+				parent.append(...icons);
+				this.toCanvas(card).then(canvas => {
+					// this.download(canvas, item.name);
+					this.saveToDisk(canvas, item.name).then(saved => {
+						setTimeout(() => {
+							this.onNext();
+						}, 400);
+					});
+				});
+			});
+			/*
+			const icon = fetch(`icons/${item.icons}`).then(response => response.text()).then(html => {
+				card.querySelector('.icons').innerHTML = html;
+				const svg = card.querySelector('.icons svg');
 				svg.setAttribute('fill', '#ffc600');
 				if (!svg.hasAttribute('viewBox')) {
 					svg.setAttribute('viewBox', '0 0 24 24');
@@ -73,6 +106,7 @@ export default class App {
 					});
 				});
 			});
+			*/
 		} else if (total === 0) {
 			info.innerHTML = `nothing to export!`;
 		} else {

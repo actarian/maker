@@ -108,9 +108,15 @@ body {
             flex: 0 0 auto;
     color: #ffc600; }
     .card .inner .text {
+      line-height: 1.2;
       text-transform: uppercase;
-      font-size: 40px;
       text-shadow: 0 4px 3px rgba(0, 0, 0, 0.15); }
+      .card .inner .text p:last-child {
+        margin: 0; }
+    .card .inner .icons {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
     .card .inner svg {
       fill: #ffc600;
       width: auto;
@@ -122,17 +128,22 @@ body {
       -ms-flex-direction: column;
           flex-direction: column; }
 
-.card--0 .icon {
+.card--0 .icons {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-ordinal-group: 2;
       -ms-flex-order: 1;
           order: 1;
   margin-bottom: 20px; }
 
+.card--0 svg + svg {
+  margin-left: 20px; }
+
 .card--0 .text {
   -webkit-box-ordinal-group: 3;
       -ms-flex-order: 2;
-          order: 2;
-  font-size: 70px; }
+          order: 2; }
 
 .card--1 .inner {
   -webkit-box-orient: vertical;
@@ -140,17 +151,22 @@ body {
       -ms-flex-direction: column;
           flex-direction: column; }
 
-.card--1 .icon {
+.card--1 .icons {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-ordinal-group: 3;
       -ms-flex-order: 2;
           order: 2;
   margin-top: 20px; }
 
+.card--1 svg + svg {
+  margin-left: 20px; }
+
 .card--1 .text {
   -webkit-box-ordinal-group: 2;
       -ms-flex-order: 1;
-          order: 1;
-  font-size: 70px; }
+          order: 1; }
 
 .card--2 .inner {
   -webkit-box-orient: horizontal;
@@ -161,14 +177,32 @@ body {
       -ms-flex-align: center;
           align-items: center; }
 
-.card--2 .icon {
+.card--2 .icons {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-ordinal-group: 2;
       -ms-flex-order: 1;
           order: 1;
   margin-right: 20px; }
 
+.card--2 svg + svg {
+  margin-top: 20px; }
+
 .card--2 .text {
   -webkit-box-ordinal-group: 3;
       -ms-flex-order: 2;
-          order: 2;
+          order: 2; }
+
+.text-sm {
+  font-size: 30px; }
+
+.text-md {
+  font-size: 50px; }
+
+.text-lg {
   font-size: 70px; }

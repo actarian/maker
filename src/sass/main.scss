@@ -75,9 +75,17 @@ body {
 		color: #ffc600;
 
 		.text {
+			line-height: 1.2;
 			text-transform: uppercase;
-			font-size: 40px;
 			text-shadow: 0 4px 3px rgba(0, 0, 0, 0.15);
+
+			p:last-child {
+				margin: 0;
+			}
+		}
+
+		.icons {
+			display: flex;
 		}
 
 		svg {
@@ -94,14 +102,18 @@ body {
 		flex-direction: column;
 	}
 
-	.icon {
+	.icons {
+		align-items: center;
 		order: 1;
 		margin-bottom: 20px;
 	}
 
+	svg+svg {
+		margin-left: 20px;
+	}
+
 	.text {
 		order: 2;
-		font-size: 70px;
 	}
 }
 
@@ -111,14 +123,18 @@ body {
 		flex-direction: column;
 	}
 
-	.icon {
+	.icons {
+		align-items: center;
 		order: 2;
 		margin-top: 20px;
 	}
 
+	svg+svg {
+		margin-left: 20px;
+	}
+
 	.text {
 		order: 1;
-		font-size: 70px;
 	}
 }
 
@@ -129,13 +145,31 @@ body {
 		align-items: center;
 	}
 
-	.icon {
+	.icons {
+		flex-direction: column;
+		justify-content: center;
 		order: 1;
 		margin-right: 20px;
 	}
 
+	svg+svg {
+		margin-top: 20px;
+	}
+
 	.text {
 		order: 2;
-		font-size: 70px;
 	}
+
+}
+
+.text-sm {
+	font-size: 30px;
+}
+
+.text-md {
+	font-size: 50px;
+}
+
+.text-lg {
+	font-size: 70px;
 }

@@ -8847,6 +8847,14 @@ var _html2canvas = _interopRequireDefault(require("html2canvas"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -8915,6 +8923,7 @@ function () {
     value: function onSave() {
       var _this4 = this;
 
+      this.i = this.outputs.length;
       this.items = this.inputs.filter(function (x) {
         return _this4.outputs.indexOf(x.name) === -1;
       });
@@ -8926,27 +8935,43 @@ function () {
     value: function onNext() {
       var _this5 = this;
 
+      var styles = 3;
       var info = document.querySelector('.info');
       var total = this.total;
 
       if (this.items.length) {
+        var i = this.i++;
         var index = total - this.items.length + 1;
+        var style = (i + index) % styles;
         info.innerHTML = "exporting ".concat(index, " of ").concat(total);
         var item = this.items.shift();
         var card = document.querySelector('.card');
         card.setAttribute('class', 'card');
-        card.classList.add('card--' + Math.floor(Math.random() * 3));
-        card.querySelector('.text').innerHTML = item.text;
-        var icon = fetch("icons/".concat(item.icon)).then(function (response) {
-          return response.text();
-        }).then(function (html) {
-          card.querySelector('.icon').innerHTML = html;
-          var svg = card.querySelector('.icon svg');
-          svg.setAttribute('fill', '#ffc600');
+        card.classList.add('card--' + style);
+        var textClasses = ['text-lg', 'text-md', 'text-sm'];
+        var textIndex = Math.min(textClasses.length - 1, Math.floor(item.text.length / 80));
+        var text = card.querySelector('.text');
+        text.innerHTML = item.text.trim();
+        text.setAttribute('class', "text ".concat(textClasses[textIndex]));
+        Promise.all(item.icons.map(function (x) {
+          return fetch("icons/".concat(x)).then(function (response) {
+            return response.text();
+          }).then(function (icon) {
+            var template = document.createElement('template');
+            template.innerHTML = icon.trim();
+            var svg = template.content.firstChild;
+            svg.setAttribute('fill', '#ffc600');
 
-          if (!svg.hasAttribute('viewBox')) {
-            svg.setAttribute('viewBox', '0 0 24 24');
-          }
+            if (!svg.hasAttribute('viewBox')) {
+              svg.setAttribute('viewBox', '0 0 24 24');
+            }
+
+            return svg;
+          });
+        })).then(function (icons) {
+          var parent = card.querySelector('.icons');
+          parent.innerHTML = '';
+          parent.append.apply(parent, _toConsumableArray(icons));
 
           _this5.toCanvas(card).then(function (canvas) {
             // this.download(canvas, item.name);
@@ -8957,6 +8982,24 @@ function () {
             });
           });
         });
+        /*
+        const icon = fetch(`icons/${item.icons}`).then(response => response.text()).then(html => {
+        	card.querySelector('.icons').innerHTML = html;
+        	const svg = card.querySelector('.icons svg');
+        	svg.setAttribute('fill', '#ffc600');
+        	if (!svg.hasAttribute('viewBox')) {
+        		svg.setAttribute('viewBox', '0 0 24 24');
+        	}
+        	this.toCanvas(card).then(canvas => {
+        		// this.download(canvas, item.name);
+        		this.saveToDisk(canvas, item.name).then(saved => {
+        			setTimeout(() => {
+        				this.onNext();
+        			}, 400);
+        		});
+        	});
+        });
+        */
       } else if (total === 0) {
         info.innerHTML = "nothing to export!";
       } else {
